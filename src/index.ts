@@ -1,7 +1,41 @@
-// import { v4 as uuidV4 } from "uuid"
+import { v4 as uuidV4 } from "uuid"
 
-// console.log(uuidV4())
+type Task = { 
+    id: string, 
+    title: string, 
+    completed: boolean, 
+    createdAt: Date 
+}
 
-const list = document.querySelector("#list")
-const form = document.querySelector("#new_task_form")
-const input = document.querySelector("#new_task_title")
+console.log(uuidV4())
+
+const list = document.querySelector<HTMLUListElement>("#list")
+const form = document.getElementById("new_task_form") as HTMLFormElement | null
+const input = document.querySelector<HTMLInputElement>("#new_task_title")
+
+// add event listener to the submit event of the form. 
+form?.addEventListener("submit", e => {
+    // Prevents the default form submission behavior, which would cause a page reload.
+    e.preventDefault()
+
+    if(input?.value == "" || input?.value == null) return
+
+    const newTask: Task = {
+        id: uuidV4(),
+        title: input.value,
+        completed: false,
+        createdAt: new Date()
+    }
+
+    addListItem(newTask)
+})
+
+function addListItem(task: Task) {
+    const item = document.createElement("li")
+    const label = document.createElement("label")
+    const checkbox = document.createElement("input")
+    checkbox.type = "checkbox"
+    label.append(checkbox, task.title)
+    item.append(label)
+    list?.append(item)
+}
