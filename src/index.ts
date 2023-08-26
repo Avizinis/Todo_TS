@@ -7,11 +7,10 @@ type Task = {
     createdAt: Date 
 }
 
-console.log(uuidV4())
-
 const list = document.querySelector<HTMLUListElement>("#list")
 const form = document.getElementById("new_task_form") as HTMLFormElement | null
 const input = document.querySelector<HTMLInputElement>("#new_task_title")
+const tasks: Task[] = []
 
 // add event listener to the submit event of the form. 
 form?.addEventListener("submit", e => {
@@ -27,14 +26,22 @@ form?.addEventListener("submit", e => {
         createdAt: new Date()
     }
 
+    tasks.push(newTask)
+
     addListItem(newTask)
+    input.value = ""
 })
 
 function addListItem(task: Task) {
     const item = document.createElement("li")
     const label = document.createElement("label")
     const checkbox = document.createElement("input")
+    checkbox.addEventListener("change", e => {
+        task.completed = checkbox.checked
+        console.log(tasks)
+    })
     checkbox.type = "checkbox"
+    checkbox.checked = task.completed
     label.append(checkbox, task.title)
     item.append(label)
     list?.append(item)
