@@ -33,11 +33,6 @@ form?.addEventListener("submit", e => {
 
     addListItem(newTask)
     input.value = ""
-
-    // console.log("tasks: ")
-    // console.log(tasks)
-    // console.log("archive: ")
-    // console.log(archive)
 })
 
 function addListItem(task: Task) {
@@ -64,7 +59,6 @@ function removeListItem(task: Task) {
     const listItem = findListItem(task)
     if (listItem) {
         listItem.remove()
-        console.log("task removed")
     }
 }
 
@@ -98,8 +92,6 @@ function archiveTask(task: Task){
     const index: number = tasks.indexOf(task)
     if(index !== -1) tasks.splice(index, 1)
     saveTasks()
-    // console.log("tasks after deletion: ")
-    // console.log(tasks)
 }
 
 function loadArchive(): Task[] {
